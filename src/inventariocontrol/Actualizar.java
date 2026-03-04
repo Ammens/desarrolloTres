@@ -3,6 +3,7 @@ package inventariocontrol;
 public class Actualizar extends javax.swing.JDialog {
     private VentanaPrincipal principal;
     private int filaSeleccionada;
+    private int idProducto;
     
     public Actualizar(java.awt.Frame parent, boolean modal, int fila) {
         super(parent, modal);
@@ -167,11 +168,27 @@ public class Actualizar extends javax.swing.JDialog {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         try {
             String nombre = fieldNombreAct.getText();
-            System.out.println("Stock: " + fieldStockAct.getText());
             int stock = Integer.parseInt(fieldStockAct.getText());
             String proveedor = fieldProvAct.getText();
             double precio = Double.parseDouble(fieldPrecioAct.getText());
-            principal.actualizarTabla(filaSeleccionada, nombre, stock, proveedor, precio);
+            String sql = "UPDATE productos SET nombre=?, stock=?, proveedor=?, precio=? WHERE id=?";
+
+            try (Connection con = Conexion.getConexion();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setString(1, nombre);
+                ps.setInt(2, stock);
+                ps.setString(3, proveedor);
+                ps.setDouble(4, precio);
+                ps.setInt(5, idProducto);
+                ps.executeUpdate();
+
+                javax.swing.JOptionPane.showMessageDialog(this, "Actualizado con exito");    
+            } catch (Exception e) {
+                e.printStackTrace();
+                javax.swing.JOptionPane.showMessageDialog(this, "Error al actualizar en la base de datos");
+                return;
+            }
+            principal.conexion.cargarDatos();
             this.dispose();
         } catch (NumberFormatException e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Por favor, ingresa valores numericos en Stock y Precio.");

@@ -1,4 +1,6 @@
 package inventariocontrol;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 public class Actualizar extends javax.swing.JDialog {
     private VentanaPrincipal principal;

@@ -25,6 +25,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         modelo.setValueAt(prov, fila, 3);
         modelo.setValueAt(precio, fila, 4); 
     }
+    
+    public javax.swing.JTable getTabla() {
+        return JtableProductos;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

@@ -10,6 +10,7 @@ public class Actualizar extends javax.swing.JDialog {
         this.filaSeleccionada = fila;
         initComponents();
         setLocationRelativeTo(parent);
+        this.idProducto = (int) principal.JtableProductos.getValueAt(fila, 0);
     }
 
     /**
